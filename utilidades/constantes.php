@@ -9,4 +9,6 @@ const PDO_ERROR = 300;// error en la conexion en PDO
 const CREACION_EXITOSA = 1;// cuando se hace un INSER exitoso
 const CREACION_FALLIDA = 2;// ||     ||   ||    ||   fallido
 
+const ESTADO_EXITOSO = 111;// una variable general para decir todo ok
+const ESTADO_FALLIDO = 222;
 ?>
