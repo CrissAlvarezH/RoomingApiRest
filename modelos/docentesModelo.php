@@ -1,6 +1,7 @@
 <?php
 require 'datos/conexionDB.php';
 require 'utilidades/constantes.php';
+require 'utilidades/exceptionApi.php';
 
 class Docentes {
 	private const NOMBRE_TABLA = "docentes";
@@ -33,6 +34,28 @@ class Docentes {
 			}
 		}catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+
+	public static getTodos(){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$select = "SELECT * FROM ".NOMBRE_TABLA.";";
+
+			$sentencia = $conexion->prepare($select);
+
+			if($sentencia->execute()){
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "fallo al obtener datos");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
 		}
 	}
 }

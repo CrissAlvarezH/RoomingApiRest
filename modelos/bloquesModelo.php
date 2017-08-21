@@ -1,7 +1,7 @@
 <?php
 require 'datos/conexionDB.php';
-require 'modelos/bloquesModelo.php';
 require 'utilidades/constantes.php';
+require 'utilidades/exceptionApi.php';
 
 class BloquesModelo {
 	// Nombre de la tabla, y nombre de los campos
@@ -53,7 +53,7 @@ class BloquesModelo {
 				return
 					[
 						"estado" => ESTADO_EXITOSO,
-						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC);
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
 					];
 			}else{
 				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
@@ -81,8 +81,8 @@ class BloquesModelo {
 				http_response_code(200);
 				return
 					[
-						"estado" => ESTADO_EXITOSO.
-						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC);
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
 					];
 			}else{
 				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
