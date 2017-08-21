@@ -16,8 +16,8 @@ class BloquesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$consultaSQL = "INSERT INTO ".NOMBRE_TABLA.
-				"(".NUMERO.", ".DESCRIPCION.") VALUES (?, ?);";
+			$consultaSQL = "INSERT INTO ".NOMBRE_TABLA
+				."(".NUMERO.", ".DESCRIPCION.") VALUES (?, ?);";
 
 			$sentancia = $conexion->prepare($consultaSQL);// preparamos la consulta
 
