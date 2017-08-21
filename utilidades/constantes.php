@@ -1,0 +1,7 @@
+<?php
+
+const METODO_NO_SOPORTADO = 500;
+const RECURSO_CREADO = 100;
+const RECURSO_NO_ENCONTRADO = 200;
+
+?>
