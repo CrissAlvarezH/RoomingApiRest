@@ -34,6 +34,32 @@ class BloquesModelo {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
+
+	/**
+	* Retorna todos los bloques que esten en la base de datos
+	*/
+	public static getTodos(){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$select = "SELECT * ".NOMBRE_TABLA.";";
+
+			$sentencia = $conexion->prepare($select);
+
+			if($sentencia->execute()){
+				http_response_code(200);// indica que todo bien en la cabecera
+				/* fetchAll(PDO::FECH_ASSOC) retorna la respuesta de la consulta en un
+				 array asosiativo gracias al parametro PDO::FECH_ASSOC */
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FECH_ASSOC);
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
+			}
+		}
+	}
 }
 
 ?>
