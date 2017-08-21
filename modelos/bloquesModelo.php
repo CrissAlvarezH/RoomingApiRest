@@ -42,7 +42,7 @@ class BloquesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$select = "SELECT * ".NOMBRE_TABLA.";";
+			$select = "SELECT * FROM ".NOMBRE_TABLA.";";
 
 			$sentencia = $conexion->prepare($select);
 
@@ -53,11 +53,42 @@ class BloquesModelo {
 				return
 					[
 						"estado" => ESTADO_EXITOSO,
-						"datos" => $sentencia->fetchAll(PDO::FECH_ASSOC);
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC);
 					];
 			}else{
 				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
 			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
+		}
+	}
+
+	/**
+	* @param $numero es el numero que identifica los bloques que seran retornados
+	*/
+	public static getPorNumero($numero){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$select = "SELECT * FROM ".NOMBRE_TABLA
+				." WHERE ".NUMERO." = ?;";
+
+			$sentencia = $conexion->prepare($select);
+
+			$sentencia->bindParam(1, $numero);
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO.
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC);
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
 		}
 	}
 }
