@@ -15,8 +15,9 @@ class Docentes {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$consultaSQL = "INSERT INTO ".NOMBRE_TABLA
-				."(".ID.", ".NOMBRE.", ".APELLIDOS.", ".TITULOS.", ".CODIGO.") "
+			$consultaSQL = "INSERT INTO ".self::NOMBRE_TABLA
+				."(".self::ID.", ".self::NOMBRE.", ".self::APELLIDOS.", "
+				.self::TITULOS.", ".self::CODIGO.") "
 				."VALUES (?, ?, ?, ?, ?);";
 
 			$sentencia = $conexion->prepare($consulta);
@@ -41,7 +42,7 @@ class Docentes {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$select = "SELECT * FROM ".NOMBRE_TABLA.";";
+			$select = "SELECT * FROM ".self::NOMBRE_TABLA.";";
 
 			$sentencia = $conexion->prepare($select);
 
@@ -53,6 +54,32 @@ class Docentes {
 					];
 			}else{
 				throw new ExceptionApi(ESTADO_FALLIDO, "fallo al obtener datos");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
+		}
+	}
+
+	public static getPorId($id){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$select = "SELECT * FROM ".self::NOMBRE_TABLA
+				." WHERE ".self::ID." = ?";
+
+			$sentencia = $conexion->prepare($select);
+
+			$sentencia->bindParam(1, $id);
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
 			}
 		}catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
