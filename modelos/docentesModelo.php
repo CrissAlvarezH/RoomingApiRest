@@ -11,7 +11,7 @@ class Docentes {
 	private const TITULOS = "titulos_docente";
 	private const CODIGO = "codigo_docente";
 
-	public static insertar($datosDocente){
+	public static function insertar($datosDocente){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
@@ -38,7 +38,7 @@ class Docentes {
 		}
 	}
 
-	public static getTodos(){
+	public static function getTodos(){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
@@ -60,7 +60,7 @@ class Docentes {
 		}
 	}
 
-	public static getPorId($id){
+	public static function getPorId($id){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 

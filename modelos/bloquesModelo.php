@@ -12,7 +12,7 @@ class BloquesModelo {
   /** Inserta un registro de la base de datos en la tabla 'bloques'
 	* @param datosBloque es un JSON con los datos a insertar
 	*/
-	public static insertar($datosBloque){
+	public static function insertar($datosBloque){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
@@ -38,7 +38,7 @@ class BloquesModelo {
 	/**
 	* Retorna todos los bloques que esten en la base de datos
 	*/
-	public static getTodos(){
+	public static function getTodos(){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
@@ -66,7 +66,7 @@ class BloquesModelo {
 	/**
 	* @param $numero es el numero que identifica los bloques que seran retornados
 	*/
-	public static getPorNumero($numero){
+	public static function getPorNumero($numero){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
