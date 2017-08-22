@@ -1,6 +1,7 @@
 <?php
 require 'utilidades/constantes.php';
 require 'modelos/bloquesModelo.php';
+require 'utilidades/exceptionApi.php';
 
 class BloquesControlador {
 
@@ -18,7 +19,7 @@ class BloquesControlador {
 
 					break;
 				default:
-				throw new ExceptionApi(PARAMETOS_INCORRECTOS, "parametros incorrectos");
+					throw new ExceptionApi(PARAMETOS_INCORRECTOS, "parametros incorrectos");
 			}
 		}
 	}
