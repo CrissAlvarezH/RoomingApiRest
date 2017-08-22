@@ -88,7 +88,33 @@ class BloquesModelo {
 				throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
 			}
 		}catch(PDOException $e){
-			throw new ExceptionApi(ESTADO_FALLIDO, "error al obtener los datos");
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
+		}
+	}
+
+	public static function getSalones($numeroBloque){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "SELECT * FROM salones WHERE numero_bloque_salon = ?;";
+
+			$sentencia = $conexion->prepare($query);
+
+			$sentencia->bindParam(1, $numeroBloque);
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error al hacer la consulta");
+			}
+
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
 		}
 	}
 }

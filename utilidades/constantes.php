@@ -11,4 +11,6 @@ const CREACION_FALLIDA = 2;// ||     ||   ||    ||   fallido
 
 const ESTADO_EXITOSO = 111;// una variable general para decir todo ok
 const ESTADO_FALLIDO = 222;
+
+const PARAMETOS_INCORRECTOS = 555;
 ?>
