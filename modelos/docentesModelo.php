@@ -29,9 +29,13 @@ class DocentesModelo {
 			$sentencia->bindParam(5, $datosDocente->codigo);
 
 			if($sentencia->execute()){
-				return CREACION_EXITOSA;
+				return
+					[
+						"estado" => CREACION_EXITOSA,
+						"mensaje" => "docente creado"
+					];
 			}else{
-				return CREACION_FALLIDA;
+				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
 		}catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
