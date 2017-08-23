@@ -19,7 +19,7 @@ class BloquesControlador {
 
 					break;
 				default:
-					throw new ExceptionApi(PARAMETOS_INCORRECTOS, "parametros incorrectos");
+					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");
 			}
 		}
 	}

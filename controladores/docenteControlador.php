@@ -20,7 +20,7 @@ class DocenteControlador {
 					break;
 
 				default:
-					throw new ExceptionApi(PARAMETOS_INCORRECTOS, "parametros incorrectos");
+					throw new ExceptionApi(PARAMETrOS_INCORRECTOS, "parametros incorrectos");
 			}
 		}
 	}
