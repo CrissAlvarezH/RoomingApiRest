@@ -25,12 +25,18 @@ class AlumnosControlador {
 	}
 
 	public static POST($peticion){
+		// obtenemos el fichero que viene con la peticion POST
+		$cuerpoPost = file_get_contents("php://input");
+		$datosUsuario = json_decode($cuerpoPost);//parseamos a JSON
+
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
 				case 'login':
+					AlumnosModelo::login($datosUsuario);
 
 					break;
 				case 'registro':
+					AlumnosModelo::insertar($datosUsuario);
 
 					break;
 				default:
@@ -38,6 +44,7 @@ class AlumnosControlador {
 			}
 		}else
 			throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrecta");
+		}
 	}
 }
 
