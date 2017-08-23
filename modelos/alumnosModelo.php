@@ -38,6 +38,40 @@ class AlumnosModelo {
 		}
 	}
 
+	public static function login($datosUsuario){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "SELECT * FROM ".NOMBRE_TABLA
+				." WHERE id = ? AND contrasena = ?;";
+
+			$sentencia = $conexion->prepare($query);
+
+			$sentencia->bindParam(1, $datosUsuario->id);
+			$sentencia->bindParam(2, $datosUsuario->contrasena);
+
+			if($sentencia->execute()){
+				if($sentencia->rowCount() > 0){//si algun usuario coincide con los datos
+					return
+						[
+							"estado" => LOGIN_OKAY,
+							"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+						];
+				}else{//si los datos estas incorrectos
+					return
+						[
+							"estado" => LOGIN_NOT_OKAY,
+							"datos" => ""
+						];
+				}
+			}else{
+				throw new ExceptionApi(LOGIN_NOT_OKAY, "error en la consulta");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+
 	public static function getTodos(){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
