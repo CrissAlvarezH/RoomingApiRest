@@ -16,8 +16,8 @@ class BloquesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$consultaSQL = "INSERT INTO ".NOMBRE_TABLA
-				."(".NUMERO.", ".DESCRIPCION.") VALUES (?, ?);";
+			$consultaSQL = "INSERT INTO ". self::NOMBRE_TABLA
+				."(". self::NUMERO .", ". self::DESCRIPCION .") VALUES (?, ?);";
 
 			$sentancia = $conexion->prepare($consultaSQL);// preparamos la consulta
 
@@ -26,9 +26,13 @@ class BloquesModelo {
 			$sentencia->bindParam(3, $datosBloque->descripcion);
 
 			if($sentencia->execute()){//ejecutamos la sentencia y evaluamos el retorno
-				return CREACION_EXITOSA;
+				return
+					[
+						"estado" => CREACION_EXITOSA,
+						"mensaje" => "bloque creado"
+					];
 			}else{
-				return CREACION_FALLIDA;
+				throw new ExceptionApi(PDO_ERROR, "error al ejecutarse la sentencia");
 			}
 		}catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
@@ -42,7 +46,7 @@ class BloquesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$select = "SELECT * FROM ".NOMBRE_TABLA.";";
+			$select = "SELECT * FROM ". self::NOMBRE_TABLA .";";
 
 			$sentencia = $conexion->prepare($select);
 
@@ -70,8 +74,8 @@ class BloquesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$select = "SELECT * FROM ".NOMBRE_TABLA
-				." WHERE ".NUMERO." = ?;";
+			$select = "SELECT * FROM ". self::NOMBRE_TABLA
+				." WHERE ". self::NUMERO ." = ?;";
 
 			$sentencia = $conexion->prepare($select);
 
