@@ -36,6 +36,10 @@ class SalonesModelo {
 		}
 	}
 
+	/** Obtiene los datos de un salon en especifico
+	* @param $codigoSalon es el codigo del salon que se quiere saber los datos
+	* @param $numeroBloque el bloque en el cual esta el salon
+	*/
 	public static function getSalon($codigoSalon, $numeroBloque){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
@@ -62,6 +66,10 @@ class SalonesModelo {
 		}
 	}
 
+	/** Retorna la informacion de todas las clases asosiadas a un salon
+	* @param $codigoSalon es el codigo del salon
+	* @param $numeroBloque el bloque donde esta el salon
+	*/
 	public static function getTodasLasClases($codigoSalon, $numeroBloque){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
