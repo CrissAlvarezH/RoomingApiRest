@@ -61,6 +61,40 @@ class SalonesModelo {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
+
+	public static function getTodasLasClases($codigoSalon, $numeroBloque){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			// SELECT cod_materia, numero_grupo, nombre_materia, creditos_materia,
+			// 	hora_inicio, hora_fin, dia, nombre_docente, apellidos_docente,
+			$query = "SELECT cod_materia, numero_grupo, nombre_materia, "
+			 	."creditos_materia, hora_inicio, hora_fin, dia, nombre_docente, "
+				."apellidos_docente FROM clases, grupos, docentes, materia "
+				."WHERE numero_grupo = numero_grupo_clase "
+				."AND cod_materia = cod_materia_grupo "
+				."AND cod_materia_grupo = cod_materia_clase "
+				."AND id_docente_grupo = id_docente "
+				."AND codigo_salon_clase = ? AND numero_bloque_clase = ?;";
+
+			$sentencia = $conexion->prepare($query);
+
+			$sentencia->bindParam(1, $codigoSalon);
+			$sentencia->bindParam(2, $numeroBloque);
+
+			if($sentencia->execute()){
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else {
+				throw new ExceptionApi(PDO_ERROR, "error al ejecutar la sentencia");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "erro en la conexion PDO");
+		}
+	}
 }
 
 ?>
