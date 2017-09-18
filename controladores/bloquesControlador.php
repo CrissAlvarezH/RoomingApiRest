@@ -3,11 +3,13 @@ require 'utilidades/constantes.php';
 require 'modelos/bloquesModelo.php';
 require 'utilidades/exceptionApi.php';
 require 'modelos/salonesModelo.php';
+require 'modelos/clasesModelo.php';
 
 class BloquesControlador {
 
-	/* Ejemplo de la URL: bloques/3/salones/7/clases/6/alumnos pide los alumnos
-	 de la clase 6 que se encuentra en el salon 7 del bloque 3 */
+	/* Ejemplo de la URL: bloques/3/salones/7/clases/6/8/alumnos pide los alumnos
+	 de la clase de la asignatura 6 en el grupo 8 que se encuentra en el salon
+	  7 del bloque 3 */
 
 	public static function get($peticion){
 		// este seria el caso de URL: bloques
@@ -26,7 +28,8 @@ class BloquesControlador {
 
 					break;
 				default:
-					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");
+					throw new ExceptionApi(PARAMETROS_INCORRECTOS,
+					 "parametros incorrectos");
 			}
 
 		// ejemplo URL: bloques/6/salones/6/clases clases de un salon
@@ -38,17 +41,19 @@ class BloquesControlador {
 
 					break;
 				default:
-					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");
+					throw new ExceptionApi(PARAMETROS_INCORRECTOS,
+					 "parametros incorrectos");
 			}
 
-		// ejemplo URL: bloques/6/salones/5/clases/4 pide una clase de un salon
-		}else if(count($peticion) == 5){
+		//ejemplo URL: bloques/6/salones/5/clases/4/7 clase de la materia 4, grupo 7
+	}else if(count($peticion) == 6){
 
 
-		// ejemplo URL: bloques/6/salones/4/clases/3/salones/7/clases/3/alumnos
-		// el cual pide los alumnos de la clase 3 ....
-		}else if(count($peticion) == 6){
-			
+		// ejemplo URL: bloques/6/salones/4/clases/3/7/alumnos
+		// el cual pide los alumnos de la clase de la materia 3, grupo 7 ....
+	}else if(count($peticion) == 7){
+			// se le pasa el codigo de la materia y el numero del grupo
+			return ClasesModelo::getAlumnos($peticion[4], $peticion[5]);
 		}
 	}
 

@@ -68,7 +68,7 @@ class BloquesModelo {
 	}
 
 	/**
-	* @param $numero es el numero que identifica los bloques que seran retornados
+	* @param numero es el numero que identifica los bloques que seran retornados
 	*/
 	public static function getPorNumero($numero){
 		try{

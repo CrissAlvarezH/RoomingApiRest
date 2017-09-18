@@ -1,6 +1,7 @@
 <?php
 require 'datos/conexionBD.php';
 require 'utilidades/constantes.php';
+require 'utilidades/exceptionApi.php';
 
 class SalonesModelo {
 	// nombre de los atributos de las tablas
@@ -74,8 +75,6 @@ class SalonesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			// SELECT cod_materia, numero_grupo, nombre_materia, creditos_materia,
-			// 	hora_inicio, hora_fin, dia, nombre_docente, apellidos_docente,
 			$query = "SELECT cod_materia, numero_grupo, nombre_materia, "
 			 	."creditos_materia, hora_inicio, hora_fin, dia, nombre_docente, "
 				."apellidos_docente FROM clases, grupos, docentes, materia "
@@ -100,7 +99,7 @@ class SalonesModelo {
 				throw new ExceptionApi(PDO_ERROR, "error al ejecutar la sentencia");
 			}
 		}catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "erro en la conexion PDO");
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
 		}
 	}
 }

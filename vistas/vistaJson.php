@@ -9,7 +9,7 @@ class VistaJson {
 
 	/**
 	* Imprime el cuerpo de la respuesta y setea el codigo de respuesta
-	* @param $cuerpo es el cuerpo de la respuesta a imprimir, un array 
+	* @param cuerpo es el cuerpo de la respuesta a imprimir, un array 
 	*/
 	public function imprimir($cuerpo){
 		if($this->estado){
