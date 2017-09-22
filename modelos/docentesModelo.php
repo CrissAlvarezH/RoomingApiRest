@@ -42,6 +42,44 @@ class DocentesModelo {
 		}
 	}
 
+	/** esta funcion se ejecutara por el metodo POST
+	* @param datosDocente es el cuerpo del JSON que viene en la cabecera por POST
+	*/
+	public static function login($datosDocente){
+		try{
+			$conexion = Conexion::getInstancia()->getConecion();
+
+			$consulta = "SELECT * FROM ".self::NOMBRE_TABLA
+				." WHERE id_docente = ? AND codigo_docente = ?;";
+
+			$sentencia = $conexion->prepare($consulta);
+
+			$sentencia->bindParam(1, $datosDocente->id);
+			$sentencia->bindParam(1, $datosDocente->codigo);
+
+			if($sentencia->execute()){
+				// Si existe algun registro con ese id  y ese codigo
+				if($sentencia->rowCount() > 0){
+					return
+						[
+							"estado" => LOGIN_OKAY,
+							"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+						];
+				}else{
+					return
+						[
+							"estado" => LOGIN_NOT_OKAY,
+							"datos" => ""
+						];
+				}
+			}else{
+				throw new ExceptionApi(PDO_ERROR, "error al ejecutar la sentencia");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
+		}
+	}
+
 	public static function getTodos(){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
