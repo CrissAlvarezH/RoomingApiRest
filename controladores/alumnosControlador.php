@@ -29,14 +29,14 @@ class AlumnosControlador {
 		$cuerpoPost = file_get_contents("php://input");
 		$datosUsuario = json_decode($cuerpoPost);//parseamos a JSON
 
-		if(!empty($peticion[0])){
+		if(!empty($peticion[0])){// URL: alumnos/login ó alumnos/registro
 			switch ($peticion[0]) {
 				case 'login':
-					AlumnosModelo::login($datosUsuario);
+					return AlumnosModelo::login($datosUsuario);
 
 					break;
 				case 'registro':
-					AlumnosModelo::insertar($datosUsuario);
+					return AlumnosModelo::insertar($datosUsuario);
 
 					break;
 				default:
