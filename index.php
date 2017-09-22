@@ -1,5 +1,7 @@
 <?php
-
+require 'controladores/alumnosControlador.php';
+require 'controladores/bloquesControlador.php';
+require 'controladores/docentesControlador.php';
 require 'utilidades/constantes.php';
 require 'utilidades/exceptionApi.php';
 require 'vistas/vistaJson.php';
@@ -25,19 +27,43 @@ set_exception_handler(function($exception) use ($vista){
 // convertimos en array lo que redireccionamos con el archivo .htaccess
 $peticionArray = explode("/", $_GET["RUTA_INFORMACION"]);
 
-$recursosDisponibles  = array('docentes', 'alumnos');
+$recursosDisponibles  = array('docentes', 'alumnos', 'bloques');
 
-if(!in_array($peticionArray[0], $recursosDisponibles)){
+$recurso = array_shift($peticionArray);
+
+if(!in_array($recurso, $recursosDisponibles)){
 	throw new ExceptionApi(RECURSO_NO_ENCONTRADO, "recurso no disponible");
 }
 
-$metodo = strtolower($_SERVER['REQUEST_METHOD']);//: get,post,... (minusculas)
+$metodo = strtolower($_SERVER['REQUEST_METHOD']);// get, post,... (minusculas)
 
 switch ($metodo) {
 	case 'get':
-		$vista->imprimir(array('estado' => 000, 'mensaje' => 'probando...'));
+
+		switch($recurso){
+			case 'bloques':
+				$vista->imprimir(BloquesControlador::get($peticionArray));
+				break;
+			case 'alumnos':
+				$vista->imprimir(AlumnosControlador::get($peticionArray));
+				break;
+			case 'docentes':
+				$vista->imprimir(DocentesControlador::get($peticionArray));
+				break;
+		}
+
 		break;
 	case 'post':
+		switch($recurso){
+			case 'bloques':
+				break;
+			case 'alumnos':
+				$vista->imprimir(AlumnosControlador::post($peticionArray));
+				break;
+			case 'docentes':
+				$vista->imprimir(AlumnosControlador::post($peticionArray));
+				break;
+		}
 
 		break;
 	case 'put':
