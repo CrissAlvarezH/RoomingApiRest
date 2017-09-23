@@ -1,14 +1,14 @@
 <?php
-require 'datos/conexionBD.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'datos/conexionDB.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
 class SalonesModelo {
 	// nombre de los atributos de las tablas
-	private const NOMBRE_TABLA = "salones";
-	private const CODIGO = "codigo_salon";
-	private const NOMBRE = "nombre_salon";
-	private const BLOQUE = "numero_bloque_salon";
+	const NOMBRE_TABLA = "salones";
+	const CODIGO = "codigo_salon";
+	const NOMBRE = "nombre_salon";
+	const BLOQUE = "numero_bloque_salon";
 
 	public static function insertar($datosSalon){
 		try{
@@ -75,14 +75,24 @@ class SalonesModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "SELECT cod_materia, numero_grupo, nombre_materia, "
+			/*$query = "SELECT cod_materia, numero_grupo, nombre_materia, "
 			 	."creditos_materia, hora_inicio, hora_fin, dia, nombre_docente, "
-				."apellidos_docente FROM clases, grupos, docentes, materia "
+				."apellidos_docente FROM clases, grupos, docentes, materias "
 				."WHERE numero_grupo = numero_grupo_clase "
 				."AND cod_materia = cod_materia_grupo "
 				."AND cod_materia_grupo = cod_materia_clase "
 				."AND id_docente_grupo = id_docente "
-				."AND codigo_salon_clase = ? AND numero_bloque_clase = ?;";
+				."AND codigo_salon_clase = ? AND numero_bloque_clase = ?;"; ORIGINAL*/
+
+			$query = "SELECT cod_materia, numero_grupo, nombre_materia, "
+			 	."creditos_materia, hora_inicio, hora_fin, nombre_docente "
+				."FROM clases, grupos, docentes, materias "
+				."WHERE numero_grupo = numero_grupo_clase "
+				."AND cod_materia = cod_materia_grupo "
+				."AND cod_materia_grupo = cod_materia_clase "
+				."AND id_docente_grupo = id_docente "
+				."AND numero_salon_clase = ? AND numero_bloque_clase = ?;";
+
 
 			$sentencia = $conexion->prepare($query);
 
@@ -99,7 +109,7 @@ class SalonesModelo {
 				throw new ExceptionApi(PDO_ERROR, "error al ejecutar la sentencia");
 			}
 		}catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO");
+			throw new ExceptionApi(PDO_ERROR, "error en la conexion PDO".$e->getMessage());
 		}
 	}
 }

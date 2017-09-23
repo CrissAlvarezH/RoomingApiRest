@@ -1,14 +1,14 @@
 <?php
-require 'datos/conexionBD.php';
-require 'utilidades/constantes.php';
-require 'urilidades/exceptionApi.php';
+require_once 'datos/conexionDB.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
 class AlumnosModelo {
-	private const NOMBRE_TABLA = "alumnos";
-	private const ID = "id_alumno";
-	private const NOMBRE = "nombre_alumno";
-	private const APELLIDOS = "apellidos_alumnos";
-	private const CONTRASENA = "contrasena_alumnos";
+	const NOMBRE_TABLA = "alumnos";
+	const ID = "id_alumno";
+	const NOMBRE = "nombre_alumno";
+	const APELLIDOS = "apellidos_alumnos";
+	const CONTRASENA = "contrasena_alumnos";
 
 	public static function insertar($datosAlumno){
 		try{
@@ -76,7 +76,7 @@ class AlumnosModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT * FROM ".NOMBRE_TABLA.";");
+			$sentencia = $conexion->prepare("SELECT * FROM ".self::NOMBRE_TABLA.";");
 
 			if($sentencia->execute()){
 				http_response_code(200);
@@ -97,13 +97,13 @@ class AlumnosModelo {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "SELECT * FROM ".NOMBRE_TABLA." WHERE id_alumno = ?;";
+			$query = "SELECT * FROM ".self::NOMBRE_TABLA." WHERE id_alumno = ?;";
 
 			$sentencia = $conexion->prepare($query);
 
 			$sentencia->bindParam(1, $id);
 
-			if($sentenacia->execute()){
+			if($sentencia->execute()){
 				http_response_code(200);
 				return
 					[
@@ -135,7 +135,7 @@ class AlumnosModelo {
 				http_response_code(200);
 				return
 					[
-						"estado" => ESTADO_EXITOSO.
+						"estado" => ESTADO_EXITOSO,
 						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
 					];
 			}else{

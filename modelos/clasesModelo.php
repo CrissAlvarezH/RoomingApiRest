@@ -1,14 +1,14 @@
 <?php
-require 'datos/conexionDB.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'datos/conexionDB.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
 class ClasesModelo {
-	private const NOMBRE_TABLA = "clases";
-	private const SALON = "codigo_salon_clase";
-	private const BLOQUE = "numero_bloque_clase";
-	private const GRUPO = "numero_grupo_clase";
-	private const MATERIA = "codigo_materia_clase";
+	const NOMBRE_TABLA = "clases";
+	const SALON = "codigo_salon_clase";
+	const BLOQUE = "numero_bloque_clase";
+	const GRUPO = "numero_grupo_clase";
+	const MATERIA = "codigo_materia_clase";
 
 	/** Retorna los alumnos de el grupo de la materia pasados por aparamteros
 	* @param codigoMateria es el codigo de la materia de la clases

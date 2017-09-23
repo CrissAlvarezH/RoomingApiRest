@@ -1,11 +1,11 @@
 <?php
-require 'modelos/alumnosModelo.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'modelos/alumnosModelo.php';
+require_once 'utilidades/constantes.php';// para que no se redeclare
+require_once 'utilidades/exceptionApi.php';
 
 class AlumnosControlador {
 
-	public static GET($peticion){
+	public static function get($peticion){
 		if(empty($peticion[0])){
 			return AlumnosModelo::getTodos();
 
@@ -24,7 +24,7 @@ class AlumnosControlador {
 		}
 	}
 
-	public static POST($peticion){
+	public static function post($peticion){
 		// obtenemos el fichero que viene con la peticion POST
 		$cuerpoPost = file_get_contents("php://input");
 		$datosUsuario = json_decode($cuerpoPost);//parseamos a JSON
@@ -42,7 +42,7 @@ class AlumnosControlador {
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrecta");
 			}
-		}else
+		}else{
 			throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrecta");
 		}
 	}

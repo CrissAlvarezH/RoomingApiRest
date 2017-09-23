@@ -1,15 +1,15 @@
 <?php
-require 'datos/conexionDB.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'datos/conexionDB.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
 class DocentesModelo {
-	private const NOMBRE_TABLA = "docentes";
-	private const ID = "id_docente";
-	private const NOMBRE = "nombre_docente";
-	private const APELLIDOS = "apellidos_docente";
-	private const TITULOS = "titulos_docente";
-	private const CODIGO = "codigo_docente";
+	const NOMBRE_TABLA = "docentes";
+	const ID = "id_docente";
+	const NOMBRE = "nombre_docente";
+	const APELLIDOS = "apellidos_docente";
+	const TITULOS = "titulos_docente";
+	const CODIGO = "codigo_docente";
 
 	public static function insertar($datosDocente){
 		try{
@@ -130,7 +130,7 @@ class DocentesModelo {
 
 	public static function getGrupos($id){
 		try{
-			$conexion = Conecion::getInstancia()->getConexion();
+			$conexion = Conexion::getInstancia()->getConexion();
 
 			$query = "SELECT numero_grupo, nombre_materia, creditos_materia "
 				. "FROM grupos, materias WHERE cod_materia_grupo = cod_materia "

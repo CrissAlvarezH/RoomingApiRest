@@ -1,13 +1,13 @@
 <?php
-require 'datos/conexionDB.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'datos/conexionDB.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
 class BloquesModelo {
 	// Nombre de la tabla, y nombre de los campos
-	private const NOMBRE_TABLA = "bloques";
-	private const NUMERO = "numero_bloque";
-	private const DESCRIPCION = "descripcion_bloque";
+	const NOMBRE_TABLA = "bloques";
+	const NUMERO = "numero_bloque";
+	const DESCRIPCION = "descripcion_bloque";
 
   /** Inserta un registro de la base de datos en la tabla 'bloques'
 	* @param datosBloque es un JSON con los datos a insertar

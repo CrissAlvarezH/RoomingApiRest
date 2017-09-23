@@ -1,10 +1,10 @@
 <?php
-require 'controladores/alumnosControlador.php';
-require 'controladores/bloquesControlador.php';
-require 'controladores/docentesControlador.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
-require 'vistas/vistaJson.php';
+require_once 'controladores/alumnosControlador.php';
+require_once 'controladores/bloquesControlador.php';
+require_once 'controladores/docentesControlador.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
+require_once 'vistas/vistaJson.php';
 
 $vista = new VistaJson();
 // definimos una funcion para manejar las excepciones
@@ -50,6 +50,8 @@ switch ($metodo) {
 			case 'docentes':
 				$vista->imprimir(DocentesControlador::get($peticionArray));
 				break;
+			default:
+				throw new ExceptionApi(100, "error en la URL");
 		}
 
 		break;

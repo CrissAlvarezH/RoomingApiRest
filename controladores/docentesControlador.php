@@ -1,9 +1,9 @@
 <?php
 require 'modelos/docentesModelo.php';
-require 'utilidades/constantes.php';
-require 'utilidades/exceptionApi.php';
+require_once 'utilidades/constantes.php';
+require_once 'utilidades/exceptionApi.php';
 
-class DocenteControlador {
+class DocentesControlador {
 
 	public static function get($peticion){
 		if(empty($peticion[0])){// URL: docentes
